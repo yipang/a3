@@ -1,0 +1,19 @@
+#map: svg{
+	margin-left: 100px;
+}
+
+h2 {
+	text-align: center;
+}
+
+h1 {
+	margin-bottom: 20;
+}
+
+rect {
+	margin-left: 100px;
+}
+
+#map_des {
+	float: right;
+}
