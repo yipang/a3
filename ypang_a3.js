@@ -3,7 +3,8 @@ var dataset;
 var new_data = [];
 // load and display the World
 d3.json("wmap.json", function(error, topology) {
-  d3.csv("directory.csv",function(error, directory) {
+  var loadDsv = d3.dsv(",", "iso-8859-1");
+  loadDsv("directory.csv", function(error, directory) {
     if (error) return console.warn(error);
     directory.forEach(function(d) {
       d.Latitude = +d.Latitude;
@@ -16,7 +17,7 @@ d3.json("wmap.json", function(error, topology) {
 
   dataset = directory;
   // console.log(dataset);
-
+  // console.log(test);
 //all the data is now loaded, so draw the initial vis
 
 //aggregated function for draw bars
@@ -25,10 +26,14 @@ d3.json("wmap.json", function(error, topology) {
       .rollup(function(v) {return v.length; })
       .entries(dataset);
 
+    var city_Scount = d3.nest()
+      .key(function(d) {return d.City; })
+      .rollup(function(v) {return v.length; })
+      .entries(dataset);
   //console.log(store_count);
 
-  var width = 960,
-      height = 500,
+  var width = 860,
+      height = 450,
       border = 1,
       bordercolor = 'rgb(238, 238, 238)', 
       centered;
@@ -76,6 +81,10 @@ var zoom = d3.behavior.zoom()
             d3.event.translate.join(",")+")scale("+d3.event.scale+")");
         g.selectAll("path")  
             .attr("d", path.projection(projection)); 
+        // g.selectAll("circle")
+        //     .attr("transform", function(d) {
+        //       return "translate(" + transform.applyX(([d.Longitude, d.Latitude])[0])+ "," + transform.applyY(([d.Longitude, d.Latitude])[1]) + ")";
+        //     });
   });
 
   //draw green dots with data in csv
@@ -98,21 +107,48 @@ var zoom = d3.behavior.zoom()
                      return projection([d.Longitude, d.Latitude])[1];
                  })
         .attr("fill", 'rgb(0,89,45)')
-        .style("opacity",0.6)
+        .style("opacity",0.3)
         //.append("svg:title")
         .on("mouseover", function(d){
-                  d3.select("h3")
+                var country = d.Country;
+                var city = d.City;
+                var num = findCountry(country);
+                var cnum = findCity(city);
+                d3.select("#country").text(country + "  "+ city);
+                d3.select("#num").text(num + " Starbucks in " + country);
+                d3.select("#cnum").text(cnum + " Starbucks in " + city);
+                  d3.select("#name")
                     .text(d["Store_Name"]);
-                  d3.select("h4").text(d["Street_Address"]);
+                  d3.select("#location").text(d["Street_Address"]);
                   d3.select(this).attr("class","incident hover");
               })
             .on("mouseout", function(d){
-              d3.select("h3").text("View the store name and address");
-              d3.select("h4").text("Move the mouse over points");
+              d3.select("#name").text("View the store name and address");
+              d3.select("#location").text("Move the mouse over points");
+              d3.select("#country").text("Country and City");
+              d3.select("#num").text("Number of Starbucks in this country");
+              d3.select("#cnum").text("Number of Starbucks in this city");
               d3.select(this).attr("class","incident");
           });
   }
 
+  function findCountry(d) {
+    for (i = 0; i < store_count.length; i++) {
+        if(store_count[i].key == d) {
+          var x = store_count[i].values;
+          return x;
+        }
+    }
+  }
+
+  function findCity(d) {
+    for (i = 0; i < city_Scount.length; i++) {
+        if(city_Scount[i].key == d) {
+          var x = city_Scount[i].values;
+          return x;
+        }
+    }
+  }
   // make the map can be zoomed while click
   function clicked(d) {
     var x, y, k;
@@ -132,6 +168,9 @@ var zoom = d3.behavior.zoom()
 
     g.selectAll("path")
         .classed("active", centered && function(d) { return d === centered; });
+
+    g.selectAll("circle")
+        .attr("r", 1);  
 
     g.transition()
         .duration(750)
@@ -168,6 +207,8 @@ var zoom = d3.behavior.zoom()
         title: 'Country'
       },
       yaxis: {
+        type: 'log',
+        fixedrange: true,
         title: 'Number of Starbucks'
       }, 
       legend: {
@@ -272,6 +313,8 @@ Plotly.newPlot('myDiv', data, layout, {showLink: false, displayModeBar: false});
 
 
         Plotly.newPlot('myDiv', data, layout, {showLink: false, displayModeBar: false});
+      
+
     });
     
   });

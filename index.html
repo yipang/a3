@@ -4,11 +4,29 @@
   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://d3js.org/topojson.v0.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- bootstrap -->
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js"></script>
+  <!-- PlotlyFinance.js -->
+  <script src="https://cdn.rawgit.com/etpinard/plotlyjs-finance/master/plotlyjs-finance.js"></script>
+
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script src="//d3js.org/topojson.v1.min.js"></script>
   <script type="text/javascript" src="ypang_a3.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
+
   <title>Starbucks All over the World</title>
 </head>
 <style>
@@ -25,38 +43,54 @@
 <!-- <img class="logo" src="http://7xrvhl.com1.z0.glb.clouddn.com/logo.png" width="100px" height="100px"> -->
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
-<h1><img class="logo" src="http://7xrvhl.com1.z0.glb.clouddn.com/logo.png" width="100px" height="100px">Starbucks All over the World</h1>
-
-<hr/>
-
-<h2>Starbucks world distribution</h2>
-<h3>View the store name and address</h3>
-<h4>Move the mouse over points</h4>
-
-<div>
-  <div id="map">
+<div class="container">
+  <div class="row">
+  <div class="col-lg-6">
+    <h1><img class="logo" src="http://7xrvhl.com1.z0.glb.clouddn.com/logo.png" width="70px" height="70px">Starbucks All over the World</h1>
   </div>
-  <div id="map_des">
-
+  <div class="col-lg-6">
+    <ul>
+      <li>Zoom on map: click on certain country or use trackpad to zoom</li>
+      <li>Zoom out: click again on the highlight part</li>
+      <li>hover on dots on map to see detailed information</li>
+      <li>Show over 350: click to show countries with more than 350 Starbucks</li>
+    </ul>
+  </div>
   </div>
 </div>
-
 <hr/>
-<div id="myDiv">
-  <script src="//d3js.org/d3.v3.min.js"></script>
-  <script src="//d3js.org/topojson.v1.min.js"></script>
 
-</div>
-  <div style="margin-left:80px; margin-bottom: 10px;">
+<!-- <h2>Starbucks world distribution</h2> -->
+<!-- <h3>View the store name and address</h3>
+<h4>Move the mouse over points</h4> -->
+<div class="container"> 
+<div class="row">
+  <div class="col-lg-8 text-center">
+    <h5 id="name">View the store name and address</h5>
+    <h6 id="location">Move the mouse over points</h6>
+    <div id="map"></div>
+  </div>
+
+<!--   <div id="map_des">
+
+  </div> -->
+  <div class="col-lg-4 text-center" style="float:right; margin-right: 0px; padding-right: 0px;">
+
+    <h5 id="country">Country and City</h5>
+    <h5 id="num">Number of Starbucks in this country</h5>
+    <h5 id="cnum">Number of Starbucks in this city</h5>
+  <!--   <div id="myDiv"></div> -->
     <button id="bottom" style="background:rgb(0,89,45); color: white;">Sort</button>
-  </div>
-  
-  <div style="margin-left:80px; margin-bottom: 10px;">
     <button id="Show_TOP" style="background:rgb(0,89,45); color: white;">Show Top 10</button>
-  </div>
-
-  <div style="margin-left:80px; margin-bottom: 10px;">
     <button id="Show_350" style="background:rgb(0,89,45); color: white;">Show over 350</button>
+    <div id="myDiv"></div>
+      <script src="//d3js.org/d3.v3.min.js"></script>
+      <script src="//d3js.org/topojson.v1.min.js"></script>
+    </div>
+
   </div>
+</div>
+</div>
+
 </body>
 </html>
